@@ -63,35 +63,35 @@ function MainNav() {
       <ListItem>
         <StyledNavLink to="/dashboard">
           <FaHome />
-          Dashboard
+          Página Inicial
         </StyledNavLink>
       </ListItem>
 
       <ListItem>
         <StyledNavLink to="/bookings">
           <FaBookOpen />
-          Bookings
+          Reservas
         </StyledNavLink>
       </ListItem>
 
       <ListItem>
         <StyledNavLink to="/cabins">
           <FaBed />
-          Cabins
+          Quartos
         </StyledNavLink>
       </ListItem>
 
       <ListItem>
         <StyledNavLink to="/users">
           <FaUsers />
-          Users
+          Usuários
         </StyledNavLink>
       </ListItem>
 
       <ListItem>
         <StyledNavLink to="/settings">
           <FaCog />
-          Settings
+          Configurações
         </StyledNavLink>
       </ListItem>
     </NavList>
