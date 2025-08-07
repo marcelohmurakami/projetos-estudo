@@ -1,27 +1,30 @@
-import styled from 'styled-components';
-import Button from './ui/Button';
-import Input from './ui/Input';
-
-const StyledApp = styled.div `
-  padding: 3em;
-  background-color: red;
-`
-
-const H1 = styled.h1 `
-  font-size: 3em;
-  font-weight: bold;
-  background-color: yellow;
-`
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import GlobalStyles from "./styles/GlobalStyles";
+import AppLayout from "./pages/AppLayout";
+import Dashboard from "./pages/Dashboard";
+import Bookings from "./pages/Bookings";
+import Cabins from "./pages/Cabins";
+import Users from "./pages/Users";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
-    <StyledApp>
-      <H1>The-Wild-Oasis</H1>
-      <Button>Check-in</Button>
-      <Button>Check-out</Button>
-      <Input></Input>
-    </StyledApp>
-  )
+    <>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Navigate replace to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="cabins" element={<Cabins />} />
+            <Route path="users" element={<Users />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
-export default App
+export default App;

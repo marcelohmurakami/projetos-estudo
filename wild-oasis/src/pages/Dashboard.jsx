@@ -1,13 +1,12 @@
-import Heading from "../ui/Heading";
-import Row from "../ui/Row";
+import styled from "styled-components"
 
 function Dashboard() {
-  return (
-    <Row type="horizontal">
-      <Heading as="h1">Dashboard</Heading>
-      <p>TEST</p>
-    </Row>
-  );
+    return (
+        <div>
+            
+        </div>
+    )
 }
 
-export default Dashboard;
+export default Dashboard
+
