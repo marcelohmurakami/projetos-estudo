@@ -38,3 +38,20 @@ const Discount = styled.div`
   font-weight: 500;
   color: var(--color-green-700);
 `;
+
+function CabinRow ({cabin}) {
+  const { image, id, num_guests, price, descount } = cabin;
+  const cleanUrl = image.replace(/^"|"$/g, ""); // remove aspas extras
+
+  return (
+    <TableRow>
+      <Img src={cleanUrl} />
+      <Cabin>{id}</Cabin>
+      <p>{num_guests} adultos</p>
+      <Price>R${price}</Price>
+      <Discount>R${descount}</Discount>
+    </TableRow>
+  )
+}
+
+export default CabinRow;
