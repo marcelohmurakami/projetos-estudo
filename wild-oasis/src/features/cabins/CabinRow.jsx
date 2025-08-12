@@ -1,4 +1,6 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
+import { deleteCabins } from "../../services/apiCabins";
 
 const TableRow = styled.div`
   display: grid;
@@ -41,7 +43,20 @@ const Discount = styled.div`
 
 function CabinRow ({cabin}) {
   const { image, id, num_guests, price, descount } = cabin;
-  const cleanUrl = image.replace(/^"|"$/g, ""); // remove aspas extras
+  let cleanUrl;
+  if (image) cleanUrl = image.replace(/^"|"$/g, ""); // remove aspas extras
+
+  const queryClient = useQueryClient();
+
+  const {isLoading: isDeleting, mutate} = useMutation({
+    mutationFn: deleteCabins,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      })
+    },
+    onError: (err) => alert(err.message)
+  })
 
   return (
     <TableRow>
@@ -50,6 +65,7 @@ function CabinRow ({cabin}) {
       <p>{num_guests} adultos</p>
       <Price>R${price}</Price>
       <Discount>R${descount}</Discount>
+      <button onClick={() => mutate(id)}>Delete</button>
     </TableRow>
   )
 }
