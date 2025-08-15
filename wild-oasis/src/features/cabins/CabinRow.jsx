@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { deleteCabins } from "../../services/apiCabins";
+import toast from "react-hot-toast";
 
 const TableRow = styled.div`
   display: grid;
@@ -48,14 +49,16 @@ function CabinRow ({cabin}) {
 
   const queryClient = useQueryClient();
 
-  const {isLoading: isDeleting, mutate} = useMutation({
+  const { mutate} = useMutation({
     mutationFn: deleteCabins,
     onSuccess: () => {
+      toast.success('Quarto deletado com sucesso!');
+
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       })
     },
-    onError: (err) => alert(err.message)
+    onError: (err) => toast.error(err.message)
   })
 
   return (

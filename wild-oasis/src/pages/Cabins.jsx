@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCabins } from "../services/apiCabins";
 import CabinTable from "../features/cabins/CabinTable";
 import Row from "../ui/Row";
+import CreateCabinForm from "../features/cabins/CreateCabinForm";
+import Button from "../ui/Button";
 
 function Cabins() {
+  const [openForm, setOpenForm] = useState(false);
+
   useEffect(function () {
     getCabins().then((data) => console.log(data));
   }, []);
@@ -15,6 +19,8 @@ function Cabins() {
     <p>filter/sort</p>
   </Row>
   <CabinTable />
+  <Button onClick={() => setOpenForm(!openForm)}>Criar quarto</Button>
+  {openForm && <CreateCabinForm />}
   </>
   )
 }

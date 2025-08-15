@@ -1,3 +1,5 @@
+import {useForm} from 'react-hook-form';
+
 import styled from "styled-components";
 
 import Input from "../../ui/Input";
@@ -43,36 +45,42 @@ const Error = styled.span`
 `;
 
 function CreateCabinForm() {
+  const {register, handleSubmit } = useForm();
+
+  function onSubmit(data) {
+
+  }
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
-        <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name" />
+        <Label htmlFor="name">ID do quarto</Label>
+        <Input type="text" id="name" {...register('name')} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" />
+        <Label htmlFor="maxCapacity">Capacidade</Label>
+        <Input type="number" id="maxCapacity" {...register('maxCapacity')}/>
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" />
+        <Label htmlFor="type">Valor</Label>
+        <Input type="number" id="type" {...register('regularPrice')} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} />
+        <Label htmlFor="discount">Desconto</Label>
+        <Input type="number" id="discount" defaultValue={0} {...register('discount')} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue="" />
+        <Label htmlFor="description">Descrição para o site</Label>
+        <Textarea type="number" id="description" defaultValue="" {...register('description')} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="image">Cabin photo</Label>
-        <FileInput id="image" accept="image/*" />
+        <FileInput id="image" accept="image/*" {...register('image')} />
       </FormRow>
 
       <FormRow>

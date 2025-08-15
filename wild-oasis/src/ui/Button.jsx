@@ -2,11 +2,12 @@ import styled, { css } from "styled-components";
 
 const Button = styled.button `
   border-radius: 10px;
-  background-color: gray;
-  padding: 1.5em;
-  font-size: 2.5em;
-  margin-right: 1em;
+  background-color: blue;
+  padding: .5em;
+  font-size: 1em;
+  margin-right: .5em;
   cursor: pointer;
+  color: white;
 `
 
 const sizes = {
