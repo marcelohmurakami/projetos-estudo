@@ -13,6 +13,7 @@ const MainGrid = styled.div`
 const MainContainer = styled.main`
   background-color: var(--color-grey-100);
   padding: 2.5em;
+  overflow: scroll;
 `;
 
 const Container = styled.div`

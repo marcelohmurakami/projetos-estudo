@@ -43,13 +43,13 @@ const Discount = styled.div`
 `;
 
 function CabinRow ({cabin}) {
-  const { image, id, num_guests, price, descount } = cabin;
+  const { image, name, maxCapacity, price, discount } = cabin;
   let cleanUrl;
   if (image) cleanUrl = image.replace(/^"|"$/g, ""); // remove aspas extras
 
   const queryClient = useQueryClient();
 
-  const { mutate} = useMutation({
+  const { mutate } = useMutation({
     mutationFn: deleteCabins,
     onSuccess: () => {
       toast.success('Quarto deletado com sucesso!');
@@ -64,11 +64,11 @@ function CabinRow ({cabin}) {
   return (
     <TableRow>
       <Img src={cleanUrl} />
-      <Cabin>{id}</Cabin>
-      <p>{num_guests} adultos</p>
+      <Cabin>{name}</Cabin>
+      <p>{maxCapacity} adultos</p>
       <Price>R${price}</Price>
-      <Discount>R${descount}</Discount>
-      <button onClick={() => mutate(id)}>Delete</button>
+      <Discount>R${discount}</Discount>
+      <button onClick={() => mutate(name)}>Delete</button>
     </TableRow>
   )
 }
