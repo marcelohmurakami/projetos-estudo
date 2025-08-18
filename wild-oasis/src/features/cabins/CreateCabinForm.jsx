@@ -68,7 +68,7 @@ function CreateCabinForm() {
   })
 
   function onSubmit(data) {
-    mutate(data);
+    mutate({...data, image: data.image[0]});
   }
 
   return (
@@ -117,13 +117,31 @@ function CreateCabinForm() {
 
       <FormRow>
         <Label htmlFor="description">Descrição para o site</Label>
-        <Textarea type="number" id="description" defaultValue="" {...register('description')} />
+        <Textarea
+          id="description"
+          defaultValue=""
+          {...register("description", {
+            required: "Esse campo precisa ser preenchido",
+          })}
+        />
+        {errors?.description?.message && (
+          <Error>{errors.description.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
         <Label htmlFor="image">Cabin photo</Label>
-        <FileInput id="image" accept="image/*" {...register('image')} />
+        <FileInput
+          id="image"
+          type="file"
+          accept="image/*"
+          {...register("image", {
+            required: "Esse campo precisa ter um upload de imagem",
+          })}
+        />
+        {errors?.image?.message && <Error>{errors.image.message}</Error>}
       </FormRow>
+
 
       <FormRow>
         {/* type is an HTML attribute! */}
