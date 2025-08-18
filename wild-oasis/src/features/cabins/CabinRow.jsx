@@ -43,7 +43,7 @@ const Discount = styled.div`
 `;
 
 function CabinRow ({cabin}) {
-  const { image, name, maxCapacity, price, discount } = cabin;
+  const { image, name, maxCapacity, regularPrice, discount } = cabin;
   let cleanUrl;
   if (image) cleanUrl = image.replace(/^"|"$/g, ""); // remove aspas extras
 
@@ -66,7 +66,7 @@ function CabinRow ({cabin}) {
       <Img src={cleanUrl} />
       <Cabin>{name}</Cabin>
       <p>{maxCapacity} adultos</p>
-      <Price>R${price}</Price>
+      <Price>R${regularPrice}</Price>
       <Discount>R${discount}</Discount>
       <button onClick={() => mutate(name)}>Delete</button>
     </TableRow>
