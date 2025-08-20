@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { deleteCabins } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import CreateCabinForm from "./CreateCabinForm";
+import { useState } from "react";
 
 const TableRow = styled.div`
   display: grid;
@@ -42,35 +44,41 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-function CabinRow ({cabin}) {
-  const { image, name, maxCapacity, regularPrice, discount } = cabin;
-  let cleanUrl;
-  if (image) cleanUrl = image.replace(/^"|"$/g, ""); // remove aspas extras
+function CabinRow({ cabin }) {
+  const { image, id, maxCapacity, regularPrice, discount } = cabin;
+  const [edit, setEdit] = useState(false);
+  console.log(cabin)
 
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
     mutationFn: deleteCabins,
     onSuccess: () => {
-      toast.success('Quarto deletado com sucesso!');
+      toast.success("Quarto deletado com sucesso!");
 
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
-      })
+      });
     },
-    onError: (err) => toast.error(err.message)
-  })
+    onError: (err) => toast.error(err.message),
+  });
 
   return (
-    <TableRow>
-      <Img src={cleanUrl} />
-      <Cabin>{name}</Cabin>
-      <p>{maxCapacity} adultos</p>
-      <Price>R${regularPrice}</Price>
-      <Discount>R${discount}</Discount>
-      <button onClick={() => mutate(name)}>Delete</button>
-    </TableRow>
-  )
+    <>
+      <TableRow>
+        <Img src={image} />
+        <Cabin>{id}</Cabin>
+        <p>{maxCapacity} adultos</p>
+        <Price>R${regularPrice}</Price>
+        <Discount>R${discount}</Discount>
+        <div>
+          <button onClick={() => mutate(id)}>Delete</button>
+          <button onClick={() => setEdit(!edit)}>Editar</button>
+        </div>
+      </TableRow>
+      {edit && <CreateCabinForm cabinToEdit={cabin}/>}
+    </>
+  );
 }
 
 export default CabinRow;

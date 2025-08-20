@@ -44,7 +44,7 @@ function CabinTable () {
     <Table>
     <TableHeader>
       <p></p>
-      <p>Quarto</p>
+      <p>ID do quarto</p>
       <p>Capacidade</p>
       <p>Preço</p>
       <p>Desconto</p>

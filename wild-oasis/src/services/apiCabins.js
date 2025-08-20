@@ -1,59 +1,77 @@
-import {supabase, supabaseUrl} from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
 
 export async function getCabins() {
-  let { data, error } = await supabase.from("Cabins").select("*");
+  const { data, error } = await supabase.from("Cabins").select("*");
 
   if (error) {
     console.error(error);
-    throw new Error('Não foi possível carregar os quartos!')
+    throw new Error("Cabins could not be loaded");
   }
 
   return data;
 }
 
-// services/apiCabins.js
-export async function createCabins(newCabin) {
-  const bucket = "cabins"; // use o MESMO bucket da dashboard
-  const imageName =
-    `${crypto.randomUUID?.() ?? Math.random()}-${newCabin.image.name}`.replaceAll("/", "");
+export async function createEditCabin(newCabin, id) {
+  const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
-  // 1) Upload primeiro
-  const { error: storageError } = await supabase
-    .storage
-    .from(bucket)
-    .upload(imageName, newCabin.image, {
-      cacheControl: "3600",
-      upsert: false,
-      contentType: newCabin.image.type,
-    });
+  const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
+    "/",
+    ""
+  );
+  const imagePath = hasImagePath
+    ? newCabin.image
+    : `${supabaseUrl}/storage/v1/object/public/cabins/${newCabin.image.name}`;
 
-  if (storageError) throw new Error("Falha ao fazer upload da imagem");
+  // 1. Create/edit cabin
+  let query = supabase.from("Cabins");
 
-  // 2) Monte a URL pública para o MESMO bucket
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/${bucket}/${imageName}`;
+  // A) CREATE
+  if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
-  // (alternativa mais à prova de erro:)
-  // const { data: { publicUrl: imagePath } } =
-  //   supabase.storage.from(bucket).getPublicUrl(imageName);
+  // B) EDIT
+  if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
-  // 3) Agora sim, insira no DB
-  const { data, error } = await supabase
+  const exists = await supabase
     .from("Cabins")
-    .insert([{ ...newCabin, image: imagePath }])
-    .select();
+    .select("id")
+    .eq("id", id)
+    .maybeSingle();
+  console.log(exists, id)
 
-  if (error) throw new Error("Não foi possível criar o quarto!");
-  return data;
-}
-
-export async function deleteCabins(name) {
-  const { error } = await supabase
-  .from('Cabins')
-  .delete()
-  .eq('name', name)
+  const { data, error } = await query.select().maybeSingle();
+  if (!data) throw new Error("Nenhum quarto encontrado para atualizar");
 
   if (error) {
     console.error(error);
-    throw new Error('Não foi possível deletar os quartos!')
+    throw new Error("Cabin could not be created");
   }
+
+  // 2. Upload image
+  if (hasImagePath) return data;
+
+  const { error: storageError } = await supabase.storage
+    .from("cabins")
+    .upload(imageName, newCabin.image);
+
+  // 3. Delete the cabin IF there was an error uplaoding image
+  if (storageError) {
+    await supabase.from("Cabins").delete().eq("id", data.id);
+    console.error(storageError);
+    throw new Error(
+      "Cabin image could not be uploaded and the cabin was not created"
+    );
+  }
+
+  return data;
+}
+
+export async function deleteCabins(id) {
+  const { data, error } = await supabase.from("Cabins").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabin could not be deleted");
+  }
+
+  return data;
 }
