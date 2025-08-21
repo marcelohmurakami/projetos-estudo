@@ -4,6 +4,7 @@ const Form = styled.form`
   ${(props) =>
     props.type !== "modal" &&
     css`
+      margin-top: 1rem;
       padding: 2.4rem 4rem;
 
       /* Box */
