@@ -73,7 +73,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const queryClient = useQueryClient();
   const { errors } = formState;
 
-  // CREATE
+  // Criar quarto
   const { mutate } = useMutation({
     mutationFn: createEditCabin,
     onSuccess: () => {
@@ -84,6 +84,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     onError: (err) => toast.error(err.message),
   });
 
+  // Editar quarto
   const { mutate: editCabin, isLoading: isEditing } = useMutation({
     mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
     onSuccess: () => {
@@ -94,7 +95,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     onError: (err) => toast.error(err.message),
   });
 
-  // CreateCabinForm.jsx (trecho)
+  
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
