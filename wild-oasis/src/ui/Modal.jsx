@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { createContext, useContext, useState } from "react";
+import { cloneElement, createContext, useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -51,7 +51,7 @@ const Button = styled.button`
   }
 `;
 
-const modalContext = createContext();
+const ModalContext = createContext();
 
 function Modal ({children}) {
   const [openName, setOpenName] = useState('');
@@ -59,28 +59,45 @@ function Modal ({children}) {
   const close = () => setOpenName('');
   const open = setOpenName;
 
-  return <modalContext.Provider value={{openName, close, open}}>{children}</modalContext.Provider>
+  return <ModalContext.Provider value={{openName, close, open}}>{children}</ModalContext.Provider>
 }
 
-function Open ({children, opens}) {
-  const {open} = useContext(modalContext);
+function Open ({children, opens: opensWindowName}) {
+  const {open} = useContext(ModalContext);
 
-  return cloneElement(children, {onClick: () => open(opens)})
+  return cloneElement(children, {onClick: () => open(opensWindowName)})
 }
 
-function Modal({children, name}) {
-  const {openName, close} = useContext(modalContext);
+function Window({children, name}) {
+  const {openName, close} = useContext(ModalContext);
+  const ref = useRef();
+
+  useEffect(function() {
+    function handleClose(e) {
+      if(ref.current && !ref.current.contains(e.target)) {
+        close ();
+      }
+    }
+
+    document.addEventListener('click', handleClose, true);
+
+    return () => document.removeEventListener('click', handleClose, true);
+  }, [close])
+
   if (name !== openName) return null;
 
   return (
     <Overlay>
-      <StyledModal>
-      <Button onClick={close}><HiXMark /></Button>
+      <StyledModal ref={ref}>
+      <Button onClick={close}>X</Button>
         <div>{cloneElement(children, {close})}</div>
 
       </StyledModal>
     </Overlay>
   )
 }
+
+Modal.Open = Open;
+Modal.Window = Window;
 
 export default Modal;

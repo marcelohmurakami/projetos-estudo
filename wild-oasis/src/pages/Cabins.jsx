@@ -7,27 +7,24 @@ import Button from "../ui/Button";
 import AddCabin from "../features/cabins/AddCabin";
 
 function Cabins() {
-
-
   useEffect(function () {
     getCabins().then((data) => console.log(data));
   }, []);
 
   return (
-  <>
-  <Row>
-    <h1>Todos os quartos</h1>
-    <p>filter/sort</p>
-  </Row>
+    <>
+      <Row>
+        <h1>Todos os quartos</h1>
+        <p>filter/sort</p>
+      </Row>
 
-  <Row>
-    <CabinTable />
-    <AddCabin />
-  </Row>
-  
-  
-  </>
-  )
+      <Row>
+        <CabinTable />
+      </Row>
+
+      <AddCabin />
+    </>
+  );
 }
 
 export default Cabins;
