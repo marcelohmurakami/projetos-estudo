@@ -1,3 +1,5 @@
+import { createClient } from "@supabase/supabase-js";
+import { createContext, useContext, useState } from "react";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -48,3 +50,37 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
+
+const modalContext = createContext();
+
+function Modal ({children}) {
+  const [openName, setOpenName] = useState('');
+
+  const close = () => setOpenName('');
+  const open = setOpenName;
+
+  return <modalContext.Provider value={{openName, close, open}}>{children}</modalContext.Provider>
+}
+
+function Open ({children, opens}) {
+  const {open} = useContext(modalContext);
+
+  return cloneElement(children, {onClick: () => open(opens)})
+}
+
+function Modal({children, name}) {
+  const {openName, close} = useContext(modalContext);
+  if (name !== openName) return null;
+
+  return (
+    <Overlay>
+      <StyledModal>
+      <Button onClick={close}><HiXMark /></Button>
+        <div>{cloneElement(children, {close})}</div>
+
+      </StyledModal>
+    </Overlay>
+  )
+}
+
+export default Modal;

@@ -4,9 +4,10 @@ import CabinTable from "../features/cabins/CabinTable";
 import Row from "../ui/Row";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
 import Button from "../ui/Button";
+import AddCabin from "../features/cabins/AddCabin";
 
 function Cabins() {
-  const [openForm, setOpenForm] = useState(false);
+
 
   useEffect(function () {
     getCabins().then((data) => console.log(data));
@@ -18,9 +19,13 @@ function Cabins() {
     <h1>Todos os quartos</h1>
     <p>filter/sort</p>
   </Row>
-  <CabinTable />
-  <Button onClick={() => setOpenForm(!openForm)}>Criar quarto</Button>
-  {openForm && <CreateCabinForm />}
+
+  <Row>
+    <CabinTable />
+    <AddCabin />
+  </Row>
+  
+  
   </>
   )
 }

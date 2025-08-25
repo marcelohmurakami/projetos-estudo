@@ -47,7 +47,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onClose }) {
   const isEdit = Boolean(cabinToEdit);
   const { id: editId, ...editValues } = cabinToEdit;
 
@@ -91,11 +91,12 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       toast.success("Cabin successfully edited");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
       reset();
+      onClose();
     },
     onError: (err) => toast.error(err.message),
   });
 
-  
+
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
@@ -199,7 +200,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={() => onClose?.()}>
           Cancelar
         </Button>
         <Button>Editar quarto</Button>
