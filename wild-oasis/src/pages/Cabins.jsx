@@ -5,6 +5,7 @@ import Row from "../ui/Row";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
 import Button from "../ui/Button";
 import AddCabin from "../features/cabins/AddCabin";
+import CabinTableOperations from "../features/cabins/CabinTableOperations";
 
 function Cabins() {
   useEffect(function () {
@@ -15,7 +16,8 @@ function Cabins() {
     <>
       <Row>
         <h1>Todos os quartos</h1>
-        <p>filter/sort</p>
+        <CabinTableOperations
+        />
       </Row>
 
       <Row>

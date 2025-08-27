@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import Button from "./Button";
 import Heading from "./Heading";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCabins } from "../../src/services/apiCabins";
+import toast from "react-hot-toast";
+import CreateCabinForm from "../features/cabins/CreateCabinForm";
+import { useState } from "react";
+import Modal from "./Modal";
 
 const StyledConfirmDelete = styled.div`
   width: 40rem;
@@ -20,21 +26,46 @@ const StyledConfirmDelete = styled.div`
   }
 `;
 
-function ConfirmDelete({ resourceName, onConfirm, disabled }) {
+function ConfirmDelete({ resourceName, onConfirm, isCanceling, id }) {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: deleteCabins,
+    onSuccess: () => {
+      toast.success("Quarto deletado com sucesso!");
+
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
   return (
     <StyledConfirmDelete>
       <Heading as="h3">Delete {resourceName}</Heading>
       <p>
-        Are you sure you want to delete this {resourceName} permanently? This
-        action cannot be undone.
+        Você tem certeza que deseja excluir esse {resourceName} permanentemente?
+        Essa ação não pode ser desfeita.
       </p>
 
       <div>
-        <Button variation="secondary" disabled={disabled}>
-          Cancel
+        <Button
+          variation="secondary"
+          disabled={false}
+          onClick={() => isCanceling(false)}
+        >
+          Cancelar
         </Button>
-        <Button variation="danger" disabled={disabled}>
-          Delete
+        <Button
+          variation="danger"
+          disabled={false}
+          onClick={() => {
+            mutate(id);
+            isCanceling(false);
+          }}
+        >
+          Excluir
         </Button>
       </div>
     </StyledConfirmDelete>

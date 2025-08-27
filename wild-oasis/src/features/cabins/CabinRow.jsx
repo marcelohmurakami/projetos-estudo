@@ -4,6 +4,9 @@ import { deleteCabins } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import CreateCabinForm from "./CreateCabinForm";
 import { useState } from "react";
+import Button from "../../ui/Button";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const TableRow = styled.div`
   display: grid;
@@ -47,21 +50,9 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   const { image, id, maxCapacity, regularPrice, discount } = cabin;
   const [edit, setEdit] = useState(false);
-  console.log(cabin)
+  console.log(cabin);
 
-  const queryClient = useQueryClient();
-
-  const { mutate } = useMutation({
-    mutationFn: deleteCabins,
-    onSuccess: () => {
-      toast.success("Quarto deletado com sucesso!");
-
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const [isDeleting, setIsDeleting] = useState(false);
 
   return (
     <>
@@ -72,11 +63,31 @@ function CabinRow({ cabin }) {
         <Price>R${regularPrice}</Price>
         <Discount>R${discount}</Discount>
         <div>
-          <button onClick={() => mutate(id)}>Delete</button>
-          <button onClick={() => setEdit(!edit)}>Editar</button>
+          <button onClick={(isDeleting) => setIsDeleting(true)}>
+            {isDeleting ? "" : "Excluir"}
+          </button>
+          {isDeleting && <ConfirmDelete resourceName={"quarto"} onConfirm={true} isCanceling={setIsDeleting} id={id}/>}
+          <Modal>
+            <Modal.Open opens="edit-cabin">
+              <button>{isDeleting ? "" : "Editar"}</button>
+            </Modal.Open>
+
+            <Modal.Window name="edit-cabin">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
-      {edit && <CreateCabinForm cabinToEdit={cabin}/>}
+      {edit && (
+        <>
+          <Modal.Open opens="cabin-form">
+            <Button>Criar novo quarto</Button>
+          </Modal.Open>
+          <Modal.Window name="cabin-form">
+            <CreateCabinForm />
+          </Modal.Window>
+        </>
+      )}
     </>
   );
 }
