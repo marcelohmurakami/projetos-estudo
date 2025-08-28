@@ -41,7 +41,9 @@ function CabinTable () {
   });
 
   const [searchParams] = useSearchParams();
-  const filterCabin = searchParams.get('discount')
+  const filterCabin = searchParams.get('discount');
+  const cabinsSortBy = searchParams.get('sortBy');
+  console.log(filterCabin, cabinsSortBy)
   
   let filteredCabins;
   if (filterCabin === "no-discount") filteredCabins = cabins?.filter((cabin) => cabin.discount === 0);

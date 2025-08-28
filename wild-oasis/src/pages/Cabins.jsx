@@ -16,8 +16,7 @@ function Cabins() {
     <>
       <Row>
         <h1>Todos os quartos</h1>
-        <CabinTableOperations
-        />
+        <CabinTableOperations />
       </Row>
 
       <Row>
