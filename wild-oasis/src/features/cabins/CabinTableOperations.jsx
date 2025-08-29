@@ -16,12 +16,12 @@ function CabinTableOperations() {
       <Select 
         urlBase={"sort-by"}
         options={[
-          {value: "name-asc", label: "Nome (A-Z)"},
-          {value: "name-desc", label: "Nome (Z-A)"},
-          {value: "capacity-asc", label: "Capacidade (menor para maior)"},
-          {value: "capacity-desc", label: "Capacidade (maior para menor)"},
-          {value: "price-asc", label: "Valor (menor para maior)"},
-          {value: "price-desc", label: "Valor (maior para menor)"},
+          {value: "id-asc", label: "Nome (A-Z)"},
+          {value: "id-desc", label: "Nome (Z-A)"},
+          {value: "maxCapacity-asc", label: "Capacidade (menor para maior)"},
+          {value: "maxCapacity-desc", label: "Capacidade (maior para menor)"},
+          {value: "regularPrice-asc", label: "Valor (menor para maior)"},
+          {value: "regularPrice-desc", label: "Valor (maior para menor)"},
         ]}
       />
     </>
