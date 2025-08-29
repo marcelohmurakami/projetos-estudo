@@ -44,9 +44,10 @@ function CabinTable () {
   const filterCabin = searchParams.get('discount');
 
   const cabinsSortBy = searchParams.get('sortBy');
+  console.log(cabinsSortBy);
   const [sort, order] = cabinsSortBy.split('-');
   let modifier = order === 'asc' ? 1 : -1;
-  // console.log(sort, order, modifier) OK
+
 
   let filteredCabins;
   if (filterCabin === "no-discount") filteredCabins = cabins?.filter((cabin) => cabin.discount === 0);
