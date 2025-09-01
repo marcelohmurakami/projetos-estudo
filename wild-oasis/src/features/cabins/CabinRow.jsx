@@ -50,7 +50,7 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   const { image, id, maxCapacity, regularPrice, discount } = cabin;
   const [edit, setEdit] = useState(false);
-  console.log(cabin);
+  console.log('quartos:', cabin);
 
   const [isDeleting, setIsDeleting] = useState(false);
 
