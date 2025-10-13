@@ -41,9 +41,10 @@ function CabinTable () {
   });
 
   const [searchParams] = useSearchParams();
-  const filterCabin = searchParams.get('discount');
+  const filterCabin = searchParams.get('discount') || 'all';
+  console.log(filterCabin);
 
-  const cabinsSortBy = searchParams.get('sortBy');
+  const cabinsSortBy = searchParams.get('sortBy') || 'id-asc';
   console.log(cabinsSortBy);
   const [sort, order] = cabinsSortBy.split('-');
   let modifier = order === 'asc' ? 1 : -1;
