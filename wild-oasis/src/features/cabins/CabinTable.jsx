@@ -48,7 +48,6 @@ function CabinTable () {
   const [sort, order] = cabinsSortBy.split('-');
   let modifier = order === 'asc' ? 1 : -1;
 
-
   let filteredCabins;
   if (filterCabin === "no-discount") filteredCabins = cabins?.filter((cabin) => cabin.discount === 0);
   else if (filterCabin === "with-discount") filteredCabins = cabins?.filter((cabin) => cabin.discount > 0);
