@@ -1,6 +1,8 @@
 function Configuracoes() {
     return(
-
+        <div>
+            
+        </div>
     )
 }
 

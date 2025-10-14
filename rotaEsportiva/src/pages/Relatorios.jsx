@@ -1,6 +1,8 @@
 function Relatorios() {
     return(
-
+        <div>
+            
+        </div>
     )
 }
 

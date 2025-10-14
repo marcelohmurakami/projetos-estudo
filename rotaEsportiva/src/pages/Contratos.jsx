@@ -1,6 +1,8 @@
 function Contratos() {
     return(
-
+        <div>
+            
+        </div>
     )
 }
 

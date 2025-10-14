@@ -1,6 +1,8 @@
 function Viagens() {
     return(
-
+        <div>
+            
+        </div>
     )
 }
 
