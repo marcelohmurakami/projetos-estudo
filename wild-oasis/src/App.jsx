@@ -51,7 +51,6 @@ function App() {
           color: 'var(--color-gray-600)',
         }
       }}>
-
       </Toaster>
     </QueryClientProvider>
   );

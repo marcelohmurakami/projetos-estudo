@@ -1,5 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  LayoutDashboard,
+  Users,
+  Plane,
+  Wallet,
+  FileText,
+  Bell,
+  BarChart3,
+  Settings
+} from "lucide-react";
 
 import logoRota from '../data/images/logo_rota.png';
 
@@ -11,10 +21,11 @@ const SidebarStyle = styled.section`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 10px;
+    padding: 10px 0;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     font-weight: 500;
+    box-shadow: 3px 0 2px rgba(0, 0, 0, 0.3);
 `
 const Img = styled.img`
     max-width: 60%;
@@ -24,9 +35,27 @@ const Img = styled.img`
 const Ul = styled.ul`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     list-style: none;
-    align-self: flex-start
+    padding: 1.5rem 0;
+    width: 80%;
+    border-top: 2px solid #ddd;
+    justify-content: flex-start;
+`
+
+const ListItem = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 5px 0px 5px 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    border-radius: 7.5px;
+
+    &:hover {
+        background-color: #111010ff;
+        color: #f8f8f8ff;
+    }
 `
 
 function Sidebar () {
@@ -34,14 +63,54 @@ function Sidebar () {
         <SidebarStyle>
             <Img src={logoRota} alt="Logo da empresa" />
             <Ul>
-                <li>Dasboard</li>
-                <li>Clientes</li>
-                <li>Viagens</li>
-                <li>Financeiro</li>
-                <li>Contratos</li>
-                <li>Lembretes</li>
-                <li>Relatórios</li>
-                <li>Configurações</li>
+                <li>
+                    <ListItem>
+                        <LayoutDashboard size={18} />
+                        <span>Dashboard</span>
+                    </ListItem>
+                </li>
+                <li>
+                    <ListItem>
+                        <Users size={18} />
+                        <span>Clientes</span>
+                    </ListItem>
+                </li>
+                <li>
+                    <ListItem>
+                        <Plane size={18} />
+                        <span>Viagens</span>
+                    </ListItem>
+                </li>
+                <li>
+                    <ListItem>
+                        <Wallet size={18} />
+                        <span>Financeiro</span>
+                    </ListItem>
+                </li>
+                <li>
+                    <ListItem>
+                        <FileText size={18} />
+                        <span>Contratos</span>
+                    </ListItem>
+                </li>
+                <li>
+                    <ListItem>
+                        <Bell size={18} />
+                        <span>Lembretes</span>
+                    </ListItem>
+                </li>
+                <li>
+                    <ListItem>
+                        <BarChart3 size={18} />
+                        <span>Relatórios</span>
+                    </ListItem>
+                </li>
+                <li>
+                    <ListItem>
+                        <Settings size={18} />
+                        <span>Configurações</span>
+                    </ListItem>
+                </li>
             </Ul>
         </SidebarStyle>
     )

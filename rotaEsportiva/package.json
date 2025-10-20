@@ -11,6 +11,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.3",
     "@tanstack/react-query-devtools": "^5.90.2",
+    "lucide-react": "^0.545.0",
     "react-hot-toast": "^2.6.0",
     "react-router": "^7.9.4",
     "react-router-dom": "^7.9.4",
